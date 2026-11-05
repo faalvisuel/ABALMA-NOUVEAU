@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="camBody" x1="255" y1="165" x2="545" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1C5140"/>
+      <stop offset="1" stop-color="#0B2B20"/>
+    </linearGradient>
+    <linearGradient id="camLens" x1="350" y1="210" x2="450" y2="306" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4B6E62"/>
+      <stop offset="1" stop-color="#10201A"/>
+    </linearGradient>
+    <radialGradient id="camGlow" cx="0" cy="0" r="1" gradientTransform="translate(400 258) rotate(90) scale(220)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2C230" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#F2C230" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="400" cy="522" rx="218" ry="28" fill="#0F3D2E" opacity=".12"/>
+  <circle cx="400" cy="258" r="220" fill="url(#camGlow)"/>
+  <g stroke="#0F3D2E" stroke-width="20" stroke-linecap="round">
+    <path d="M400 330v192"/>
+    <path d="M400 330 296 500"/>
+    <path d="M400 330l104 170"/>
+  </g>
+  <g fill="#10201A">
+    <circle cx="296" cy="500" r="13"/>
+    <circle cx="504" cy="500" r="13"/>
+    <circle cx="400" cy="522" r="13"/>
+  </g>
+  <path d="M320 165v-20c0-17 13-30 30-30h100c17 0 30 13 30 30v20" stroke="#10201A" stroke-width="16" stroke-linecap="round"/>
+  <rect x="255" y="165" width="290" height="185" rx="34" fill="url(#camBody)"/>
+  <rect x="255" y="165" width="290" height="185" rx="34" stroke="#10201A" stroke-width="4" opacity=".35"/>
+  <rect x="352" y="146" width="96" height="22" rx="11" fill="#F2C230"/>
+  <circle cx="508" cy="196" r="10" fill="#E1654B"/>
+  <circle cx="508" cy="196" r="17" stroke="#E1654B" stroke-width="3" opacity=".35"/>
+  <rect x="278" y="305" width="58" height="13" rx="6.5" fill="#4B6E62"/>
+  <circle cx="400" cy="258" r="88" fill="#C3CFCB"/>
+  <circle cx="400" cy="258" r="76" stroke="#F2C230" stroke-width="7"/>
+  <circle cx="400" cy="258" r="64" fill="#10201A"/>
+  <circle cx="400" cy="258" r="47" fill="url(#camLens)"/>
+  <circle cx="400" cy="258" r="27" fill="#0F3D2E"/>
+  <circle cx="381" cy="238" r="11" fill="#F5F6F2" opacity=".72"/>
+  <circle cx="422" cy="278" r="6" fill="#F2C230"/>
+  <g transform="translate(178 366) rotate(-9)">
+    <rect x="0" y="30" width="112" height="72" rx="9" fill="#F5F6F2" stroke="#0F3D2E" stroke-width="5"/>
+    <rect x="0" y="0" width="112" height="34" rx="9" fill="#0F3D2E"/>
+    <path d="M16 0 31 34M46 0 61 34M76 0 91 34" stroke="#F2C230" stroke-width="6"/>
+  </g>
+  <g stroke="#F2C230" stroke-width="5" stroke-linecap="round">
+    <path d="M630 168v34M613 185h34"/>
+    <path d="M166 222v22M155 233h22"/>
+  </g>
+  <circle cx="630" cy="306" r="7" fill="#0F3D2E" opacity=".45"/>
+  <circle cx="184" cy="318" r="5" fill="#0F3D2E" opacity=".3"/>
+</svg>

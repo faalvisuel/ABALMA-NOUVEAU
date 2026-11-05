@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <radialGradient id="eventGlow" cx="0" cy="0" r="1" gradientTransform="translate(400 280) rotate(90) scale(250)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2C230" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#F2C230" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ballFill" x1="342" y1="104" x2="458" y2="222" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5F6F2"/>
+      <stop offset="1" stop-color="#879E97"/>
+    </linearGradient>
+    <clipPath id="ballClip">
+      <circle cx="400" cy="163" r="63"/>
+    </clipPath>
+  </defs>
+  <ellipse cx="400" cy="522" rx="250" ry="30" fill="#0F3D2E" opacity=".12"/>
+  <circle cx="400" cy="280" r="248" fill="url(#eventGlow)"/>
+  <path d="M180 70 330 300H120L180 70z" fill="#F2C230" opacity=".14"/>
+  <path d="M620 70 680 300H470L620 70z" fill="#F2C230" opacity=".14"/>
+  <path d="M400 32v68" stroke="#4B6E62" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="400" cy="163" r="63" fill="url(#ballFill)"/>
+  <g clip-path="url(#ballClip)" stroke="#0F3D2E" stroke-width="2.5" opacity=".45">
+    <path d="M337 163h126M400 100v126M348 121c38 27 66 27 104 0M348 205c38-27 66-27 104 0"/>
+    <ellipse cx="400" cy="163" rx="30" ry="63"/>
+    <ellipse cx="400" cy="163" rx="54" ry="63"/>
+    <path d="M337 131h126M337 195h126"/>
+  </g>
+  <circle cx="400" cy="163" r="63" stroke="#0F3D2E" stroke-width="4"/>
+  <circle cx="377" cy="139" r="15" fill="#F5F6F2" opacity=".7"/>
+  <rect x="130" y="256" width="158" height="242" rx="20" fill="#0F3D2E"/>
+  <rect x="512" y="256" width="158" height="242" rx="20" fill="#0F3D2E"/>
+  <circle cx="209" cy="312" r="42" fill="#10201A"/>
+  <circle cx="209" cy="312" r="26" fill="#4B6E62"/>
+  <circle cx="209" cy="312" r="10" fill="#F2C230"/>
+  <circle cx="591" cy="312" r="42" fill="#10201A"/>
+  <circle cx="591" cy="312" r="26" fill="#4B6E62"/>
+  <circle cx="591" cy="312" r="10" fill="#F2C230"/>
+  <circle cx="209" cy="424" r="56" fill="#10201A"/>
+  <circle cx="209" cy="424" r="37" fill="#4B6E62"/>
+  <circle cx="209" cy="424" r="16" fill="#F2C230"/>
+  <circle cx="591" cy="424" r="56" fill="#10201A"/>
+  <circle cx="591" cy="424" r="37" fill="#4B6E62"/>
+  <circle cx="591" cy="424" r="16" fill="#F2C230"/>
+  <rect x="322" y="392" width="156" height="104" rx="16" fill="#F5F6F2" stroke="#0F3D2E" stroke-width="5"/>
+  <circle cx="360" cy="432" r="18" fill="#0F3D2E"/>
+  <circle cx="360" cy="432" r="8" fill="#F2C230"/>
+  <circle cx="440" cy="432" r="18" fill="#0F3D2E"/>
+  <circle cx="440" cy="432" r="8" fill="#F2C230"/>
+  <rect x="344" y="462" width="112" height="10" rx="5" fill="#C3CFCB"/>
+  <rect x="356" y="478" width="88" height="6" rx="3" fill="#C3CFCB"/>
+  <g fill="#F2C230">
+    <rect x="288" y="230" width="12" height="24" rx="3" transform="rotate(-24 294 242)"/>
+    <rect x="492" y="212" width="12" height="24" rx="3" transform="rotate(28 498 224)"/>
+    <rect x="330" y="166" width="10" height="20" rx="3" transform="rotate(18 335 176)"/>
+    <circle cx="470" cy="238" r="6"/>
+  </g>
+  <g fill="#0F3D2E" opacity=".55">
+    <rect x="304" y="176" width="9" height="18" rx="3" transform="rotate(36 308 185)"/>
+    <circle cx="272" cy="238" r="5"/>
+    <rect x="512" y="158" width="9" height="18" rx="3" transform="rotate(-30 516 167)"/>
+  </g>
+  <g stroke="#F2C230" stroke-width="5" stroke-linecap="round">
+    <path d="M676 190v28M662 204h28"/>
+    <path d="M146 198v22M135 209h22"/>
+  </g>
+</svg>
