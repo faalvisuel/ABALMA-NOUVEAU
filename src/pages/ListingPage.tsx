@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../auth'
 import { fcfa, initials, isReadyForPublic, ownerLevel, shortName } from '../lib/util'
-import { Icon, Page, Spinner, Star } from '../components/ui'
+import { Icon, Page, Spinner, Star, Avatar } from '../components/ui'
 
 export default function ListingPage() {
   const { id } = useParams()
@@ -14,7 +14,7 @@ export default function ListingPage() {
   const [i, setI] = useState(0)
 
   useEffect(() => {
-    supabase.from('listings').select('*, owner:public_profiles(id,first_name,last_name,verified,owner_rentals,owner_rating,job)').eq('id', id).maybeSingle()
+    supabase.from('listings').select('*, owner:public_profiles(id,first_name,last_name,verified,owner_rentals,owner_rating,job,avatar_url)').eq('id', id).maybeSingle()
       .then(({ data }) => setL(data && isReadyForPublic(data) ? data : null))
     supabase.from('reviews').select('*, author:public_profiles!reviews_author_id_fkey(first_name,last_name)').eq('listing_id', id).eq('role', 'borrower_to_owner')
       .order('created_at', { ascending: false }).limit(1).then(({ data }) => setReview(data?.[0] || null))
@@ -48,7 +48,7 @@ export default function ListingPage() {
       <div className="card stack s2" style={{ padding: '12px 14px' }}><div className="tiny muted">Caution éventuelle à convenir</div><div className="bold num" style={{ fontSize: 18 }}>{fcfa(l.deposit)}</div></div>
     </div>
     <div className="card row" style={{ padding: '12px 14px' }}>
-      <div className="avatar">{l.is_demo ? (name || '?').slice(0, 1) : initials(o?.first_name, o?.last_name)}</div>
+      {l.is_demo ? <div className="avatar">{(name || '?').slice(0, 1)}</div> : <Avatar url={o?.avatar_url} name={o?.first_name} size={44} />}
       <div className="stack s2 grow">
         <div className="bold">{name}</div>
         <div className="small muted">

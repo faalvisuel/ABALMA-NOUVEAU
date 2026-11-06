@@ -2,8 +2,8 @@ import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase, errMsg } from '../lib/supabase'
 import { useAuth } from '../auth'
-import { borrowerLevel, initials, ownerLevel } from '../lib/util'
-import { ErrorBox, Header, Icon, Page } from '../components/ui'
+import { borrowerLevel, compressImage, initials, ownerLevel } from '../lib/util'
+import { Avatar, ErrorBox, Header, Icon, Page } from '../components/ui'
 
 export default function Profile() {
   const { user, profile, refresh, signOut } = useAuth()
@@ -16,6 +16,27 @@ export default function Profile() {
   const [idInfo, setIdInfo] = useState<string | null>(null)
   const [idBusy, setIdBusy] = useState(false)
   const [identityNoticeAccepted, setIdentityNoticeAccepted] = useState(false)
+  const [avBusy, setAvBusy] = useState(false)
+  const [avErr, setAvErr] = useState<string | null>(null)
+  async function pickAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]; e.target.value = ''
+    if (!file) return
+    setAvErr(null)
+    if (!file.type.startsWith('image/')) return setAvErr('Choisissez une photo (JPG ou PNG).')
+    setAvBusy(true)
+    try {
+      const blob = await compressImage(file, 512, 0.85)
+      const path = `${user.id}/avatar-${Date.now()}.jpg`
+      const up = await supabase.storage.from('avatars').upload(path, blob, { contentType: 'image/jpeg', upsert: false })
+      if (up.error) throw up.error
+      const url = supabase.storage.from('avatars').getPublicUrl(path).data.publicUrl
+      const { error } = await supabase.from('profiles').update({ avatar_url: url }).eq('id', user.id)
+      if (error) throw error
+      const old = profile?.avatar_url as string | undefined
+      if (old && old.includes('/avatars/')) await supabase.storage.from('avatars').remove([old.split('/avatars/')[1]])
+      await refresh()
+    } catch (er) { setAvErr(errMsg(er)) } finally { setAvBusy(false) }
+  }
   const set = (k: string) => (e: any) => { setF({ ...f, [k]: e.target.value }); setOk(false) }
 
   async function save(e: FormEvent) {
@@ -26,6 +47,7 @@ export default function Profile() {
   }
   async function submitIdentity() {
     setIdError(null); setIdInfo(null)
+    if (!profile?.avatar_url) return setIdError('Ajoutez d’abord une photo de profil (votre visage, bien visible) : elle sert à vous identifier et à comparer avec votre pièce.')
     if (!identityNoticeAccepted) return setIdError('Confirmez la notice de traitement avant d’envoyer vos documents.')
     if (!idFiles.front || !idFiles.back) return setIdError('Ajoutez le recto et le verso de votre pièce d’identité.')
     if ([idFiles.front, idFiles.back].some(file => file.size > 8 * 1024 * 1024)) return setIdError('Chaque fichier doit faire 8 Mo maximum.')
@@ -70,13 +92,15 @@ export default function Profile() {
 
   return <Page>
     <Header title="Mon profil" back="/" />
-    <div className="card row"><div className="avatar lg">{initials(profile?.first_name, profile?.last_name)}</div>
+    <div className="card row"><div style={{ display: 'grid', gap: 6, justifyItems: 'center' }}><Avatar url={profile?.avatar_url} name={profile?.first_name} size={72} />
+      <label className="link-btn" style={{ cursor: 'pointer', fontSize: 13 }}>{avBusy ? 'Envoi…' : profile?.avatar_url ? 'Changer' : 'Ajouter une photo'}<input type="file" accept="image/*" hidden disabled={avBusy} onChange={pickAvatar} /></label></div>
       <div className="stack s2 grow"><div className="bold" style={{ fontSize: 17 }}>{profile?.first_name} {profile?.last_name}</div><div className="small muted">{user.email}</div>
         <div className="row wrap" style={{ gap: 6, marginTop: 4 }}>
           <span className={'pill' + (profile?.identity_status === 'verified' ? '' : ' warn')}>{profile?.identity_status === 'verified' ? 'Identité vérifiée' : profile?.identity_status === 'pending' ? 'Vérification en cours' : profile?.identity_status === 'rejected' ? 'Documents à corriger' : 'Identité à vérifier'}</span>
           <span className="pill">Emprunteur {borrowerLevel(profile?.score ?? 400).name.toLowerCase()}</span>
           <span className="pill">Loueur {ownerLevel(profile).name.toLowerCase()}</span>
         </div></div></div>
+    <ErrorBox msg={avErr} />
     {link('/score', 'Score de confiance', `${profile?.score ?? 400} points · vos réductions et avantages`)}
     {link('/mes-annonces', 'Mes annonces', 'Gérer mon matériel et voir mon niveau de loueur')}
     {profile?.is_admin && link('/admin', 'Administration', 'Utilisateurs, annonces, réservations et litiges')}

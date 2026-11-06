@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!configured) { setItems([]); return }
-    supabase.from('listings').select('*, owner:public_profiles(id,first_name,last_name,verified,owner_rentals,owner_rating,job)')
+    supabase.from('listings').select('*, owner:public_profiles(id,first_name,last_name,verified,owner_rentals,owner_rating,job,avatar_url)')
       .eq('status', 'online').order('created_at', { ascending: false })
       .then(({ data }) => setItems((data || []).filter(isReadyForPublic)))
   }, [])

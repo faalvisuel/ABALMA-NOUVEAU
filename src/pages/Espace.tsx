@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth'
 import { borrowerLevel, initials, ownerLevel } from '../lib/util'
-import { Icon, Page } from '../components/ui'
+import { Icon, Page, Avatar } from '../components/ui'
 
 function Action({ to, icon, title, text }: { to: string; icon: string; title: string; text: string }) {
   return <Link to={to} className="card stack s6" style={{ color: 'inherit' }}>
@@ -34,7 +34,7 @@ export default function Espace() {
 
     <div className="card dark stack s8">
       <div className="row">
-        <div className="avatar lg" style={{ background: '#F2C230', color: '#10201A' }}>{initials(profile?.first_name, profile?.last_name)}</div>
+        <Avatar url={profile?.avatar_url} name={profile?.first_name} size={56} />
         <div className="stack s2 grow">
           <div className="bold" style={{ fontSize: 18 }}>{profile?.first_name} {profile?.last_name}</div>
           <div className="small muted">{user.email}</div>

@@ -52,6 +52,11 @@ export function BottomNav() {
     {items.map(([to, ic, lab]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => isActive ? 'active' : ''}><Icon name={ic} />{lab}</NavLink>)}
   </nav>
 }
+export function Avatar({ url, name, size = 40 }: { url?: string | null; name?: string; size?: number }) {
+  const st = { width: size, height: size, borderRadius: '50%', flex: 'none' as const }
+  return url ? <img src={url} alt={name ? `Photo de ${name}` : ''} style={{ ...st, objectFit: 'cover', background: '#E4EAE1' }} />
+    : <span style={{ ...st, background: '#F2C230', color: '#10201A', display: 'grid', placeItems: 'center', fontWeight: 700, fontSize: size * 0.4 }} aria-hidden="true">{(name || '?').trim()[0]?.toUpperCase() || '?'}</span>
+}
 export function TopBar() {
   const { user, profile } = useAuth()
   const links: [string, string][] = [['/accueil', 'Explorer'], ['/reservations', 'Réservations'], ['/mes-annonces', 'Mes annonces'], ['/revenus', 'Suivi']]
@@ -64,7 +69,7 @@ export function TopBar() {
       <div className="tb-acts">
         {user ? <>
           <Link className="tb-pill" to="/publier"><Icon name="plus" size={18} />Publier</Link>
-          <Link className="tb-avatar" to="/profil" aria-label="Mon profil">{(profile?.first_name?.[0] || user.email?.[0] || '?').toUpperCase()}</Link>
+          <Link className="tb-avatar" to="/profil" aria-label="Mon profil"><Avatar url={profile?.avatar_url} name={profile?.first_name || user.email} size={40} /></Link>
         </> : <>
           <Link className="tb-text" to="/connexion">Se connecter</Link>
           <Link className="tb-pill" to="/publier">Publier une annonce</Link>

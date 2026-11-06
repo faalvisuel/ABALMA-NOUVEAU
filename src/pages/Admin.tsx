@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 import { supabase, errMsg } from '../lib/supabase'
 import { useAuth } from '../auth'
 import { fcfa, isReadyForPublic, STATUS_LABEL } from '../lib/util'
-import { ErrorBox, Header, Page, Spinner } from '../components/ui'
+import { Avatar, ErrorBox, Header, Page, Spinner } from '../components/ui'
 
 type AdminTab = 'verif' | 'overview' | 'users' | 'listings' | 'bookings'
 
@@ -144,20 +144,20 @@ export default function Admin() {
       const sel = users.find(u => u.id === selId) || null
       const docs = sel ? identityDocs.filter(d => d.user_id === sel.id) : []
       const ageDays = (d?: string) => d ? Math.max(0, Math.floor((Date.now() - new Date(d).getTime()) / 86400000)) : 0
-      const allChecked = ['name', 'face', 'legible', 'valid'].every(k => checks[k])
+      const allChecked = ['name', 'selfie', 'face', 'legible', 'valid'].every(k => checks[k])
       return <div className="adm-verif">
         <aside className="adm-queue">
           <div className="adm-seg" role="tablist"><button role="tab" aria-selected={verifFilter === 'pending'} className={verifFilter === 'pending' ? 'on' : ''} onClick={() => { setVerifFilter('pending'); setSelId(null) }}>À examiner ({pendingIdentities.length})</button>
             <button role="tab" aria-selected={verifFilter === 'done'} className={verifFilter === 'done' ? 'on' : ''} onClick={() => { setVerifFilter('done'); setSelId(null) }}>À corriger ({users.filter(u => u.identity_status === 'rejected').length})</button></div>
           {queue.length === 0 ? <div className="adm-empty"><b>{verifFilter === 'pending' ? 'Aucun dossier en attente' : 'Rien à corriger'}</b><span>{verifFilter === 'pending' ? 'Les nouvelles demandes apparaîtront ici dès qu’un utilisateur enverra sa pièce d’identité.' : 'Les dossiers refusés apparaissent ici jusqu’à un nouvel envoi.'}</span></div>
             : queue.map(u => <button key={u.id} className={'adm-item' + (selId === u.id ? ' on' : '')} onClick={() => { setSelId(u.id); setChecks({}) }}>
-              <span className="adm-avatar">{(u.first_name?.[0] || '?').toUpperCase()}</span>
+              <Avatar url={u.avatar_url} name={u.first_name} size={38} />
               <span className="adm-item-text"><b>{n(u)}</b><small>{u.quartier || 'Quartier non renseigné'}</small></span>
               <small className="adm-age">{ageDays(u.identity_submitted_at || u.created_at) === 0 ? 'Aujourd’hui' : `${ageDays(u.identity_submitted_at || u.created_at)} j`}</small></button>)}
         </aside>
         <section className="adm-detail">
           {!sel ? <div className="adm-empty lg"><b>Sélectionnez un dossier</b><span>Choisissez une personne dans la liste pour voir sa pièce d’identité et décider.</span></div> : <>
-            <header className="adm-head"><div><h2>{n(sel)}</h2><p>Inscrit le {sel.created_at ? new Date(sel.created_at).toLocaleDateString('fr-FR') : '—'} · {sel.quartier || 'Quartier non renseigné'}{sel.job ? ` · ${sel.job}` : ''}</p></div>
+            <header className="adm-head"><div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><Avatar url={sel.avatar_url} name={sel.first_name} size={64} /><div><h2>{n(sel)}</h2><p>Inscrit le {sel.created_at ? new Date(sel.created_at).toLocaleDateString('fr-FR') : '—'} · {sel.quartier || 'Quartier non renseigné'}{sel.job ? ` · ${sel.job}` : ''}</p></div></div>
               <span className={'pill' + (sel.identity_status === 'verified' ? '' : ' warn')}>{sel.identity_status === 'pending' ? 'À examiner' : sel.identity_status === 'rejected' ? 'À corriger' : sel.identity_status === 'verified' ? 'Vérifiée' : 'Non vérifiée'}</span></header>
             <div className="adm-docs">{docs.length === 0 ? <div className="adm-empty"><b>Aucun document</b><span>Cette personne n’a pas (ou plus) de pièce enregistrée.</span></div>
               : docs.map(d => <figure key={d.side} className="adm-doc"><figcaption>{d.side === 'front' ? 'Recto' : 'Verso'}</figcaption>
@@ -168,7 +168,7 @@ export default function Admin() {
             <p className="adm-note">Accès privé : les liens expirent au bout de 10 minutes. Les copies sont supprimées dès votre décision.</p>
             {sel.identity_status === 'pending' && <>
               <fieldset className="adm-checks"><legend>Avant de valider</legend>
-                {([['name', 'Le nom sur la pièce correspond au compte'], ['face', 'Recto et verso sont de la même pièce'], ['legible', 'La pièce est lisible, sans retouche visible'], ['valid', 'La pièce n’est pas expirée']] as const).map(([k, label]) =>
+                {([['name', 'Le nom sur la pièce correspond au compte'], ['selfie', 'La photo de profil ressemble à la photo de la pièce'], ['face', 'Recto et verso sont de la même pièce'], ['legible', 'La pièce est lisible, sans retouche visible'], ['valid', 'La pièce n’est pas expirée']] as const).map(([k, label]) =>
                   <label key={k}><input type="checkbox" checked={!!checks[k]} onChange={e => setChecks(c => ({ ...c, [k]: e.target.checked }))} />{label}</label>)}</fieldset>
               <div className="adm-actions"><button className="btn" disabled={!allChecked || busy || docs.length !== 2} onClick={() => decideSelected(sel.id, 'verified')}>Vérifier l’identité</button>
                 <button className="btn danger" disabled={busy} onClick={() => decideSelected(sel.id, 'rejected')}>Demander de nouveaux documents</button></div>
@@ -207,7 +207,7 @@ export default function Admin() {
       {filteredUsers.map(u => {
         const docs = identityDocs.filter(d => d.user_id === u.id)
         return <div key={u.id} className="card stack" style={{ padding: 14 }}>
-          <div className="row top"><div className="stack s2 grow"><div className="bold">{n(u)}{u.is_admin ? ' · admin' : ''}</div>
+          <div className="row top"><Avatar url={u.avatar_url} name={u.first_name} size={44} /><div className="stack s2 grow"><div className="bold">{n(u)}{u.is_admin ? ' · admin' : ''}</div>
             <div className="small muted">Inscription : {u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '—'} · {u.quartier || 'Quartier non renseigné'} · score {u.score} · {u.rentals_done} empr. · {u.owner_rentals} loc.</div>
             <span className={'pill' + (u.identity_status === 'verified' ? '' : ' warn')}>Identité : {u.identity_status === 'verified' ? 'vérifiée' : u.identity_status === 'pending' ? 'à examiner' : u.identity_status === 'rejected' ? 'à corriger' : 'non vérifiée'}</span>
             {u.suspended && <span className="pill warn">Compte suspendu</span>}
