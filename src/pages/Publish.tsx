@@ -54,6 +54,14 @@ export default function Publish() {
     setDone(data)
   }
 
+  if (profile && profile.identity_status !== 'verified' && !done) return <Page>
+    <Header title="Vérifiez votre identité" back="/" />
+    <div className="card stack"><p className="soft">{profile.identity_status === 'pending'
+      ? 'Votre dossier est en cours d’examen. Vous pourrez publier du matériel dès que l’équipe ABALMA l’aura validé.'
+      : 'Pour la sécurité de tous, votre pièce d’identité est vérifiée manuellement avant de publier du matériel.'}</p>
+      <Link to="/profil#identite" className="btn">{profile.identity_status === 'pending' ? 'Voir mon dossier' : 'Vérifier mon identité'}</Link></div>
+  </Page>
+
   if (done) return <Page>
     <div className="card dark stack">
       <div className="avatar" style={{ background: '#F2C230', color: '#10201A' }}><Icon name="check" size={26} stroke={2.6} /></div>
