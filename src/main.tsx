@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from
 import './styles.css'
 import './market-v2.css'
 import './jiji.css'
+import './shell.css'
 import { AuthProvider, useAuth } from './auth'
 import { configured } from './lib/supabase'
 import { ErrorBox, Spinner } from './components/ui'

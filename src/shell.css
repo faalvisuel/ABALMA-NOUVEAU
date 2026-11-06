@@ -1,0 +1,40 @@
+/* Desktop shell: top bar, content widths, listing two-column */
+.tb{display:none}
+.page.wide,.page.narrow{width:100%}
+.listing-layout{display:block}
+.listing-thumbs{display:none}
+@media (min-width:900px){
+  .nav{display:none!important}
+  .tb{display:block;position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #E4EAE1}
+  .tb-in{max-width:1200px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;gap:32px}
+  .tb .logo{width:auto;height:30px}
+  .tb .logo img{width:auto;height:30px}
+  .tb-links{display:flex;gap:6px;flex:1}
+  .tb-links a{padding:8px 14px;border-radius:999px;font-weight:600;font-size:15px;color:#10201A;text-decoration:none}
+  .tb-links a:hover{background:#F5F6F2}
+  .tb-links a.active{background:#E4EAE1;color:#0F3D2E}
+  .tb-acts{display:flex;align-items:center;gap:14px}
+  .tb-text{font-weight:600;font-size:15px;color:#10201A;text-decoration:none}
+  .tb-pill{display:inline-flex;align-items:center;gap:6px;background:#0F3D2E;color:#fff;border-radius:999px;padding:10px 20px;font-weight:700;font-size:15px;text-decoration:none}
+  .tb-pill:hover{background:#0b2e22}
+  .tb-avatar{width:40px;height:40px;border-radius:50%;background:#F2C230;color:#10201A;display:grid;place-items:center;font-weight:700;text-decoration:none}
+  .app{box-shadow:none}
+  .page{max-width:760px;padding:40px 32px 72px}
+  .page.wide{max-width:1120px}
+  .page.narrow{max-width:480px;margin-top:24px;padding:36px;border:1px solid #E4EAE1;border-radius:20px;background:#fff;margin-bottom:64px}
+  .page.narrow>.logo{display:none}
+  .page.no-nav{padding-bottom:72px}
+  .btn{width:auto;min-width:200px;border-radius:999px}
+  .page.narrow .btn,.sticky-foot .btn{width:100%}
+  input,select,textarea{border-radius:12px}
+  .grid2{gap:16px}
+  .listing-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:start}
+  .listing-media .hero-photo{margin:0;height:auto;aspect-ratio:4/3;border-radius:20px;overflow:hidden}
+  .listing-thumbs{display:flex;gap:10px;margin-top:12px}
+  .listing-thumbs button{width:84px;height:64px;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;cursor:pointer;background:none}
+  .listing-thumbs button.on{border-color:#0F3D2E}
+  .listing-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+  .listing-info{position:sticky;top:92px}
+  .sticky-foot{position:static!important;transform:none;box-shadow:none;border:0;padding:16px 0 0;background:none}
+  .header{position:static}
+}

@@ -28,12 +28,17 @@ export default function ListingPage() {
   const mine = user && o?.id === user.id
   const photos: string[] = l.photos || []
 
-  return <Page nav={false}>
+  return <Page nav={false} wide>
+    <div className="listing-layout">
+    <div className="listing-media">
     <div className="hero-photo">
       {photos.length ? <img src={photos[i]} alt={`${l.title}, photo ${i + 1} sur ${photos.length}`} /> : <div className="stack s6 center small"><Icon name="cam" size={44} stroke={1.5} />Pas encore de photo</div>}
       <button className="back" aria-label="Retour" onClick={() => nav(-1)}><Icon name="back" stroke={2.2} /></button>
       {photos.length > 1 && <div className="hero-dots">{photos.map((_, k) => <button key={k} className={k === i ? 'on' : ''} aria-label={`Photo ${k + 1}`} onClick={() => setI(k)}><i /></button>)}</div>}
     </div>
+    {photos.length > 1 && <div className="listing-thumbs">{photos.map((src, k) => <button key={k} className={k === i ? 'on' : ''} aria-label={`Voir la photo ${k + 1}`} onClick={() => setI(k)}><img src={src} alt="" loading="lazy" /></button>)}</div>}
+    </div>
+    <div className="listing-info">
     <div className="stack s6">
       <div className="label">{l.category === 'Autre' && l.category_other ? l.category_other : l.category} · {l.quartier}</div>
       <h1 className="display h2">{l.title}</h1>
@@ -71,6 +76,8 @@ export default function ListingPage() {
             <div className="stack s2"><div className="bold num" style={{ fontSize: 18 }}>{fcfa(l.price)}</div><div className="tiny muted">par jour</div></div>
             <Link to={`/reserver/${l.id}`} className="btn grow">Choisir mes dates</Link>
           </div>}
+    </div>
+    </div>
     </div>
   </Page>
 }

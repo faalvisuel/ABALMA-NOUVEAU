@@ -1,6 +1,7 @@
 import { ReactNode, useMemo, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { fcfa, iso, ownerLevel, shortName } from '../lib/util'
+import { useAuth } from '../auth'
 
 const PATHS: Record<string, string> = {
   search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
@@ -51,8 +52,29 @@ export function BottomNav() {
     {items.map(([to, ic, lab]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => isActive ? 'active' : ''}><Icon name={ic} />{lab}</NavLink>)}
   </nav>
 }
-export function Page({ children, nav = true }: { children: ReactNode; nav?: boolean }) {
-  return <><main className={'page' + (nav ? '' : ' no-nav')}>{children}</main>{nav && <BottomNav />}</>
+export function TopBar() {
+  const { user, profile } = useAuth()
+  const links: [string, string][] = [['/accueil', 'Explorer'], ['/reservations', 'Réservations'], ['/mes-annonces', 'Mes annonces'], ['/revenus', 'Suivi']]
+  return <header className="tb">
+    <div className="tb-in">
+      <Logo />
+      <nav className="tb-links" aria-label="Navigation principale">
+        {(user ? links : [links[0]]).map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : ''}>{label}</NavLink>)}
+      </nav>
+      <div className="tb-acts">
+        {user ? <>
+          <Link className="tb-pill" to="/publier"><Icon name="plus" size={18} />Publier</Link>
+          <Link className="tb-avatar" to="/profil" aria-label="Mon profil">{(profile?.first_name?.[0] || user.email?.[0] || '?').toUpperCase()}</Link>
+        </> : <>
+          <Link className="tb-text" to="/connexion">Se connecter</Link>
+          <Link className="tb-pill" to="/publier">Publier une annonce</Link>
+        </>}
+      </div>
+    </div>
+  </header>
+}
+export function Page({ children, nav = true, wide = false, narrow = false }: { children: ReactNode; nav?: boolean; wide?: boolean; narrow?: boolean }) {
+  return <><TopBar /><main className={'page' + (nav ? '' : ' no-nav') + (wide ? ' wide' : '') + (narrow ? ' narrow' : '')}>{children}</main>{nav && <BottomNav />}</>
 }
 export const Spinner = () => <div className="spinner" role="status" aria-label="Chargement" />
 export const ErrorBox = ({ msg }: { msg?: string | null }) => msg ? <div className="error" role="alert">{msg}</div> : null

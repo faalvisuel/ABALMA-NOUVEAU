@@ -82,7 +82,7 @@ export default function AuthPage() {
     } catch (error) { setErr(errMsg(error)) } finally { setBusy(false) }
   }
 
-  return <Page nav={false}>
+  return <Page nav={false} narrow>
     <Logo />
     <h1 className="display h1">{mode === 'in' ? 'Connexion' : mode === 'reset' ? 'Réinitialiser mon mot de passe' : 'Créer un compte'}</h1>
     <p className="soft">{mode === 'in' ? 'Retrouvez vos réservations et vos annonces.' : mode === 'reset' ? 'Recevez un lien par e-mail pour choisir un nouveau mot de passe.' : 'Un seul compte pour emprunter et pour louer votre matériel.'}</p>
