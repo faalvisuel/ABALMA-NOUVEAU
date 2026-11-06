@@ -112,11 +112,17 @@ export default function Home() {
         </ol>
       </section>
 
-      <section className="ab-trust">
-        <div><h2>Une location en confiance</h2>
-          <p>Les propriétaires peuvent faire vérifier leur identité, et vous gardez le contact direct avec eux. ABALMA ne prend aucun paiement : vous réglez entre vous, au moment de la remise.</p>
-          <Link className="ab-btn" to="/connexion?mode=signup">Créer un compte gratuit</Link></div>
-        <ul><li><h3>Identité vérifiée</h3><p>Une pièce d’identité contrôlée avant le badge.</p></li><li><h3>Contact direct</h3><p>Pas d’intermédiaire entre vous et le propriétaire.</p></li><li><h3>Gratuit</h3><p>Inscription et publication sans frais.</p></li></ul>
+      <section className="ab-banner" aria-labelledby="banner-title">
+        <svg className="ab-banner-art" viewBox="0 0 440 300" preserveAspectRatio="xMinYMax slice" aria-hidden="true">
+          <ellipse cx="0" cy="300" rx="440" ry="330" fill="#0F3D2E" /><ellipse cx="0" cy="300" rx="350" ry="270" fill="#4A6F62" />
+          <ellipse cx="0" cy="300" rx="270" ry="210" fill="#8AA096" /><ellipse cx="0" cy="300" rx="190" ry="150" fill="#C3D0CB" /><ellipse cx="0" cy="300" rx="110" ry="90" fill="#FFFFFF" />
+        </svg>
+        <div className="ab-banner-text">
+          <Logo inverse />
+          <h2 id="banner-title">Pourquoi acheter quand on peut louer ?</h2>
+          <p>Le matériel qu’il te faut, les revenus que tu peux générer.</p>
+          <Link className="ab-sun" to="/connexion?mode=signup">Créer un compte gratuit</Link>
+        </div>
       </section>
     </main>
 
