@@ -63,16 +63,21 @@ export default function AuthPage() {
       } else {
         if (!acceptedTerms) throw new Error('Vous devez accepter les conditions d’utilisation et la politique de confidentialité.')
         const acceptedAt = new Date().toISOString()
-        const { data, error } = await withTimeout(supabase.auth.signUp({
-          email: f.email.trim(), password: f.password,
-          options: {
-            emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}connexion`,
-            data: { first_name: f.first_name.trim(), last_name: f.last_name.trim(), quartier: f.quartier.trim(), job: f.job.trim(), terms_accepted_version: TERMS_VERSION, terms_accepted_at: acceptedAt },
+        const created = await withTimeout(supabase.functions.invoke('signup', {
+          body: {
+            email: f.email.trim(), password: f.password,
+            first_name: f.first_name.trim(), last_name: f.last_name.trim(), quartier: f.quartier.trim(), job: f.job.trim(),
+            terms_accepted_version: TERMS_VERSION, terms_accepted_at: acceptedAt,
           },
         }))
+        if (created.error) {
+          let msg = ''
+          try { msg = (await (created.error as any).context?.json?.())?.error || '' } catch { /* réponse non lisible */ }
+          throw new Error(msg || 'Impossible de créer le compte. Réessayez.')
+        }
+        const { error } = await withTimeout(supabase.auth.signInWithPassword({ email: f.email.trim(), password: f.password }))
         if (error) throw error
-        if (!data.session) setInfo('Compte créé. Consultez votre boîte e-mail et confirmez votre adresse avant de vous connecter.')
-        else nav(next, { replace: true })
+        nav(next, { replace: true })
       }
     } catch (error) { setErr(errMsg(error)) } finally { setBusy(false) }
   }
