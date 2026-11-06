@@ -62,7 +62,11 @@ export default function Home() {
           <p>Trouvez ce qu’il vous faut ou faites travailler ce que vous possédez. Inscription gratuite, sans paiement en ligne.</p>
           <div className="ab-hero-cta"><Link className="ab-btn ab-lg" to="/publier">Publier une annonce</Link><a className="ab-ghost ab-lg" href="#annonces">Parcourir les annonces</a></div>
         </div>
-        <div className="ab-hero-img" aria-hidden="true"><img src={`${import.meta.env.BASE_URL}hero/camera.svg`} alt="" /></div>
+        <div className="ab-hero-photos">
+          <img className="p1" src={`${import.meta.env.BASE_URL}photos/perceuse-sourire.jpg`} alt="Menuisier souriant avec sa perceuse" />
+          <img className="p2" src={`${import.meta.env.BASE_URL}photos/photographe-lunettes.jpg`} alt="Photographe avec son appareil" />
+          <img className="p3" src={`${import.meta.env.BASE_URL}photos/dj.jpg`} alt="DJ en soirée" />
+        </div>
       </section>
 
       <form className="ab-search" onSubmit={search} role="search">
@@ -106,9 +110,9 @@ export default function Home() {
       <section className="ab-how" id="comment">
         <h2>Comment ça marche</h2>
         <ol>
-          <li><b>1</b><h3>Cherchez</h3><p>Tapez le matériel et votre quartier pour voir ce qui est disponible près de vous.</p></li>
-          <li><b>2</b><h3>Contactez</h3><p>Échangez directement avec le propriétaire et réservez les dates qui vous conviennent.</p></li>
-          <li><b>3</b><h3>Louez</h3><p>Convenez du prix ensemble et récupérez le matériel en main propre.</p></li>
+          <li><img src={`${import.meta.env.BASE_URL}photos/colis-femme.jpg`} alt="" loading="lazy" /><b>1</b><h3>Cherchez</h3><p>Tapez le matériel et votre quartier pour voir ce qui est disponible près de vous.</p></li>
+          <li><img src={`${import.meta.env.BASE_URL}photos/rire.jpg`} alt="" loading="lazy" /><b>2</b><h3>Contactez</h3><p>Échangez directement avec le propriétaire et réservez les dates qui vous conviennent.</p></li>
+          <li><img src={`${import.meta.env.BASE_URL}photos/echange-rue.jpg`} alt="" loading="lazy" /><b>3</b><h3>Louez</h3><p>Convenez du prix ensemble et récupérez le matériel en main propre.</p></li>
         </ol>
       </section>
 
@@ -117,6 +121,7 @@ export default function Home() {
           <ellipse cx="0" cy="300" rx="440" ry="330" fill="#0F3D2E" /><ellipse cx="0" cy="300" rx="350" ry="270" fill="#4A6F62" />
           <ellipse cx="0" cy="300" rx="270" ry="210" fill="#8AA096" /><ellipse cx="0" cy="300" rx="190" ry="150" fill="#C3D0CB" /><ellipse cx="0" cy="300" rx="110" ry="90" fill="#FFFFFF" />
         </svg>
+        <img className="ab-banner-photo" src={`${import.meta.env.BASE_URL}photos/atelier.jpg`} alt="" loading="lazy" />
         <div className="ab-banner-text">
           <Logo inverse />
           <h2 id="banner-title">Pourquoi acheter quand on peut louer ?</h2>
