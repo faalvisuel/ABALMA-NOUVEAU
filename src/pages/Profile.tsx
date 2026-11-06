@@ -51,10 +51,15 @@ export default function Profile() {
       if (rowError) throw rowError
       const { error: submitError } = await supabase.rpc('submit_identity_documents')
       if (submitError) throw submitError
-      await refresh()
       setIdFiles({ front: null, back: null })
       setIdentityNoticeAccepted(false)
-      setIdInfo('Documents envoyés. L’équipe ABALMA examinera votre demande; vous pourrez utiliser toutes les fonctions après vérification.')
+      setIdInfo('Analyse de vos documents en cours…')
+      let result: any = null
+      try { result = (await supabase.functions.invoke('verify-identity')).data } catch { /* l'examen manuel prend le relais */ }
+      await refresh()
+      if (result?.status === 'verified') setIdInfo('Identité vérifiée. Vous pouvez maintenant publier du matériel et louer.')
+      else if (result?.status === 'rejected') { setIdInfo(null); setIdError([result.message, ...(result.problems || [])].join(' · ')) }
+      else setIdInfo('Documents reçus. Un dernier contrôle par l’équipe ABALMA est nécessaire; vous serez autorisé à publier et louer dès la validation.')
     } catch (error) {
       if (uploaded.length) await supabase.storage.from('identity-documents').remove(uploaded)
       setIdError(errMsg(error))
@@ -77,13 +82,14 @@ export default function Profile() {
     {profile?.is_admin && link('/admin', 'Administration', 'Utilisateurs, annonces, réservations et litiges')}
     <section id="identite" className="card stack s16">
       <h2 className="h3">Vérifier mon identité</h2>
-      {profile?.identity_status === 'verified' ? <div className="notice">Votre identité a été vérifiée manuellement par l’équipe ABALMA. Vous pouvez demander une location et publier du matériel.</div>
+      {profile?.identity_status === 'verified' ? <div className="notice">Votre identité a été vérifiée par ABALMA. Vous pouvez demander une location et publier du matériel.</div>
         : profile?.identity_status === 'pending' ? <div className="notice">Votre dossier est en cours d’examen. Vous pourrez louer ou publier dès que la vérification sera terminée.</div>
         : <>
+          {profile?.identity_status === 'rejected' && profile?.identity_review_note && <div className="notice warn" role="alert"><b>Votre pièce n’a pas pu être validée.</b> {profile.identity_review_note} Merci d’envoyer de nouvelles photos.</div>}
           <p className="small soft">Pour louer ou proposer du matériel, envoyez une photo ou un scan lisible du recto et du verso de votre carte d’identité. Ces documents sont stockés dans un espace privé et accessibles uniquement à vous et à l’équipe de vérification ABALMA. Ils seront supprimés après la décision de vérification.</p>
           <div className="field"><label htmlFor="id-front">Recto — JPG, PNG ou PDF (8 Mo max.)</label><input id="id-front" type="file" accept="image/jpeg,image/png,application/pdf" capture="environment" onChange={e => setIdFiles({ ...idFiles, front: e.target.files?.[0] || null })} /></div>
           <div className="field"><label htmlFor="id-back">Verso — JPG, PNG ou PDF (8 Mo max.)</label><input id="id-back" type="file" accept="image/jpeg,image/png,application/pdf" capture="environment" onChange={e => setIdFiles({ ...idFiles, back: e.target.files?.[0] || null })} /></div>
-          <label className="consent-row"><input type="checkbox" checked={identityNoticeAccepted} onChange={e => setIdentityNoticeAccepted(e.target.checked)} /><span>J’accepte d’envoyer ces copies à l’équipe ABALMA pour la vérification manuelle de mon compte. Elles ne sont pas publiques et seront supprimées après décision.</span></label>
+          <label className="consent-row"><input type="checkbox" checked={identityNoticeAccepted} onChange={e => setIdentityNoticeAccepted(e.target.checked)} /><span>J’accepte que ces copies soient analysées automatiquement (lecture du nom, des dates et de la lisibilité) puis, si besoin, examinées par l’équipe ABALMA. Elles ne sont pas publiques et sont supprimées après la décision.</span></label>
           <p className="tiny muted">ABALMA ne procède pas à une vérification officielle auprès d’une autorité. Les modalités de traitement et les transferts de données doivent être validés avant le lancement.</p>
           <ErrorBox msg={idError} />{idInfo && <div className="notice" role="status">{idInfo}</div>}
           <button type="button" className="btn" disabled={idBusy} onClick={submitIdentity}>{idBusy ? 'Envoi sécurisé…' : 'Envoyer mes documents'}</button>

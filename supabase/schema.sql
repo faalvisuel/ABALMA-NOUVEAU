@@ -723,3 +723,8 @@ begin
 end $$;
 revoke all on function public.admin_users_overview() from public, anon;
 grant execute on function public.admin_users_overview() to authenticated;
+
+-- Vérification automatique d'identité (voir supabase/functions/verify-identity)
+alter table public.profiles add column if not exists identity_review_note text;
+alter table public.profiles add column if not exists identity_reviewed_by text;
+alter table public.profiles add column if not exists identity_auto_checked_at timestamptz;

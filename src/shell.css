@@ -38,3 +38,4 @@
   .sticky-foot{position:static!important;transform:none;box-shadow:none;border:0;padding:16px 0 0;background:none}
   .header{position:static}
 }
+.notice.warn{background:#FBEFC4;color:#10201A}

@@ -164,6 +164,7 @@ export default function Admin() {
                 {!docLinks[d.storage_path] ? <div className="adm-doc-load">Chargement…</div>
                   : /\.pdf($|\?)/i.test(d.storage_path) ? <a className="btn ghost sm" href={docLinks[d.storage_path]} target="_blank" rel="noreferrer">Ouvrir le PDF</a>
                   : <a href={docLinks[d.storage_path]} target="_blank" rel="noreferrer" title="Ouvrir en grand"><img src={docLinks[d.storage_path]} alt={`Pièce d’identité, ${d.side === 'front' ? 'recto' : 'verso'}`} /></a>}</figure>)}</div>
+            {sel.identity_review_note && <div className="notice warn"><b>Pourquoi ce dossier est en revue manuelle :</b> {sel.identity_review_note}</div>}
             <p className="adm-note">Accès privé : les liens expirent au bout de 10 minutes. Les copies sont supprimées dès votre décision.</p>
             {sel.identity_status === 'pending' && <>
               <fieldset className="adm-checks"><legend>Avant de valider</legend>
