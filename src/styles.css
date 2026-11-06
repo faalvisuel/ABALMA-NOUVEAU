@@ -1,17 +1,17 @@
 :root {
   --green: #0F3D2E; --green-2: #1C5140; --yellow: #F2C230; --ink: #10201A; --soft: #33423B; --muted: #55635C;
-  --bg: #F5F6F2; --card: #FFFFFF; --tint: #E4EAE1; --line: #DDE2DA; --border: #C9D1C6; --pale: #DCE7E0;
+  --bg: #FAFAFA; --card: #FFFFFF; --tint: #F0F0EE; --line: #E6E6E6; --border: #D4D4D4; --pale: #EDEDEB;
   --danger: #A3341C; --warn-bg: #FBEDB8; --warn-ink: #6B4E00;
   --display: 'Bricolage Grotesque', 'Figtree', system-ui, sans-serif;
   --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: #E9ECE6; color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; -webkit-text-size-adjust: 100%; }
+html, body { margin: 0; background: #FFFFFF; color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; -webkit-text-size-adjust: 100%; }
 img { max-width: 100%; display: block; }
 a { color: var(--green); text-decoration: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
-:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 h1, h2, h3, p { margin: 0; }
 
 .app { max-width: 480px; min-height: 100dvh; margin: 0 auto; background: var(--bg); display: flex; flex-direction: column; position: relative; }

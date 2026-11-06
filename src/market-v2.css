@@ -1,5 +1,5 @@
 :root { --display: 'DM Sans', system-ui, sans-serif; --body: 'DM Sans', system-ui, sans-serif; }
-html, body { background: #f8f9f6; font-family: var(--body); }
+html, body { background: #fff; font-family: var(--body); }
 .app { max-width: none; min-height: 100dvh; background: #f8f9f6; }
 .page { width: 100%; max-width: 680px; margin-inline: auto; }
 .market-v2 { --m-green: #0f3d2e; --m-ink: #14211c; --m-yellow: #f2c230; --m-line: #e6e9e3; --m-muted: #69736c; color: var(--m-ink); min-height: 100vh; font-family: 'DM Sans', system-ui, sans-serif; background: #f8f9f6; }
