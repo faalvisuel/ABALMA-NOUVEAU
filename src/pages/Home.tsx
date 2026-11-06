@@ -2,11 +2,13 @@ import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { supabase, configured } from '../lib/supabase'
 import { CATEGORIES, fcfa, isReadyForPublic } from '../lib/util'
-import { Icon, Logo } from '../components/ui'
+import { useAuth } from '../auth'
+import { Avatar, Icon, Logo } from '../components/ui'
 
 const ZONES = ['Dakar', 'Plateau', 'Médina', 'Almadies', 'Ngor', 'Ouakam', 'Mermoz', 'Sacré-Cœur', 'Parcelles Assainies', 'Pikine', 'Guédiawaye', 'Rufisque', 'Thiès', 'Saint-Louis', 'Mbour', 'Saly']
 
 export default function Home() {
+  const { user, profile } = useAuth()
   const [params, setParams] = useSearchParams()
   const [items, setItems] = useState<any[] | null>(null)
   const [query, setQuery] = useState(params.get('q') || '')
@@ -51,7 +53,9 @@ export default function Home() {
         <nav className="ab-links" aria-label="Navigation">
           <a href="#annonces">Parcourir</a><a href="#comment">Comment ça marche</a><Link to="/publier">Proposer du matériel</Link>
         </nav>
-        <div className="ab-acts"><Link className="ab-signin" to="/connexion">Se connecter</Link><Link className="ab-btn" to="/publier">Publier une annonce</Link></div>
+        <div className="ab-acts">{user
+          ? <><Link className="ab-btn ab-hide-s" to="/publier">Publier une annonce</Link><Link className="ab-me" to="/profil" aria-label="Mon profil"><Avatar url={profile?.avatar_url} name={profile?.first_name || user.email} size={36} /><span>{profile?.first_name || 'Mon profil'}</span></Link></>
+          : <><Link className="ab-signin" to="/connexion">Se connecter</Link><Link className="ab-btn" to="/connexion?mode=signup">S’inscrire</Link></>}</div>
       </div>
     </header>
 

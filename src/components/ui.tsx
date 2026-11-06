@@ -69,10 +69,10 @@ export function TopBar() {
       <div className="tb-acts">
         {user ? <>
           <Link className="tb-pill" to="/publier"><Icon name="plus" size={18} />Publier</Link>
-          <Link className="tb-avatar" to="/profil" aria-label="Mon profil"><Avatar url={profile?.avatar_url} name={profile?.first_name || user.email} size={40} /></Link>
+          <Link className="tb-me" to="/profil" aria-label="Mon profil"><Avatar url={profile?.avatar_url} name={profile?.first_name || user.email} size={36} /><span>{profile?.first_name || 'Mon profil'}</span></Link>
         </> : <>
           <Link className="tb-text" to="/connexion">Se connecter</Link>
-          <Link className="tb-pill" to="/publier">Publier une annonce</Link>
+          <Link className="tb-pill" to="/connexion?mode=signup">S’inscrire</Link>
         </>}
       </div>
     </div>

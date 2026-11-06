@@ -113,3 +113,8 @@
 .ab-banner{grid-template-rows:200px auto}
 @media(min-width:900px){.ab-banner{grid-template-rows:none}}
 @media(max-width:559px){.ab-hero-photos{max-width:340px}}
+
+.ab-me,.tb-me{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--ink,#10201A);text-decoration:none;padding:4px 12px 4px 4px;border-radius:999px;border:1px solid #E4EAE1;background:#fff}
+.ab-me:hover,.tb-me:hover{background:#F5F6F2}
+.ab-me span,.tb-me span{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:559px){.ab-hide-s{display:none}.ab-me span{max-width:80px}}
