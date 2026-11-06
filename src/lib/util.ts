@@ -23,7 +23,7 @@ export function isReadyForPublic(l: any): boolean {
   const description = String(l.description || '').trim()
   const photos = Array.isArray(l.photos) ? l.photos.filter((photo: unknown) => typeof photo === 'string' && photo.trim()) : []
   const placeholder = /\b(test|exemple|demo|démo|placeholder|lorem ipsum|à venir|bientôt)\b/i
-  return title.length >= 4 && description.length >= 30 && !placeholder.test(`${title} ${description}`)
+  return title.length >= 4 && description.length >= 10 && !placeholder.test(`${title} ${description}`)
     && Boolean(String(l.category || '').trim() && String(l.quartier || '').trim())
     && Number(l.price) > 0 && photos.length >= 3 && photos.length <= 5
 }

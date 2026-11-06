@@ -41,6 +41,7 @@ export default function Publish() {
 
   async function publish(e: FormEvent) {
     e.preventDefault(); setErr(null)
+    if (f.description.trim().length < 10) return setErr('Décrivez votre matériel en 10 caractères minimum (état, accessoires fournis) : sans cela, l’annonce ne s’affiche pas.')
     if (price <= 0) return setErr('Indiquez un prix par jour.')
     setSaving(true)
     const { data, error } = await supabase.from('listings').insert({
@@ -102,7 +103,7 @@ export default function Publish() {
       <div className="field"><label htmlFor="ti">Nom du matériel</label><input id="ti" required maxLength={80} placeholder="Ex. Enceinte active 1000 W" value={f.title} onChange={set('title')} /></div>
       <div className="field"><label htmlFor="ca">Catégorie</label><select id="ca" value={f.category} onChange={set('category')}>{CATEGORIES.map(c => <option key={c}>{c}</option>)}</select><div className="hint">{CATEGORY_HINTS[f.category]}</div></div>
       {f.category === 'Autre' && <div className="field"><label htmlFor="co">Précisez le type de matériel</label><input id="co" required maxLength={40} placeholder="Ex. Machine à coudre" value={f.category_other} onChange={set('category_other')} /></div>}
-      <div className="field"><label htmlFor="de">Description et accessoires inclus</label><textarea id="de" maxLength={800} placeholder="État, accessoires fournis, conditions…" value={f.description} onChange={set('description')} /></div>
+      <div className="field"><label htmlFor="de">Description et accessoires inclus</label><textarea id="de" maxLength={800} minLength={10} placeholder="État, accessoires fournis, conditions…" value={f.description} onChange={set('description')} /></div>
       <div className="field"><label htmlFor="qu">Quartier (visible par tous)</label><input id="qu" required placeholder="Ex. Mermoz" value={f.quartier} onChange={set('quartier')} /></div>
       <div className="card stack">
         <div className="field"><label htmlFor="ad">Lieu exact de remise</label><input id="ad" required placeholder="Ex. Sacré-Cœur 3, villa 12" value={f.exact_address} onChange={set('exact_address')} /></div>
