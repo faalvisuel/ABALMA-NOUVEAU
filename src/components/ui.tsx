@@ -59,7 +59,7 @@ export function TopBar() {
     <div className="tb-in">
       <Logo />
       <nav className="tb-links" aria-label="Navigation principale">
-        {(user ? links : [links[0]]).map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : ''}>{label}</NavLink>)}
+        {(user ? (profile?.is_admin ? [...links, ['/admin', 'Administration'] as [string, string]] : links) : [links[0]]).map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : ''}>{label}</NavLink>)}
       </nav>
       <div className="tb-acts">
         {user ? <>

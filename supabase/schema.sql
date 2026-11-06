@@ -711,3 +711,15 @@ grant execute on function public.admin_set_identity_status(uuid,text), public.su
 
 notify pgrst, 'reload schema';
 
+
+
+-- Admin: e-mail et dernière connexion de chaque compte (lecture réservée à l'administrateur)
+create or replace function public.admin_users_overview()
+returns table(user_id uuid, email text, last_sign_in_at timestamptz)
+language plpgsql stable security definer set search_path = public, auth as $$
+begin
+  if not public.is_admin() then raise exception 'Réservé à l’administrateur.'; end if;
+  return query select u.id, u.email::text, u.last_sign_in_at from auth.users u;
+end $$;
+revoke all on function public.admin_users_overview() from public, anon;
+grant execute on function public.admin_users_overview() to authenticated;

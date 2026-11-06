@@ -1,0 +1,47 @@
+/* Admin panel */
+.adm-verif{display:grid;gap:16px;align-items:start}
+.adm-queue{display:flex;flex-direction:column;gap:6px}
+.adm-seg{display:flex;background:#F5F6F2;border-radius:999px;padding:4px;margin-bottom:6px}
+.adm-seg button{flex:1;border:0;background:none;padding:9px 10px;border-radius:999px;font:600 14px/1 inherit;color:#55635C;cursor:pointer}
+.adm-seg button.on{background:#fff;color:#10201A;box-shadow:0 1px 3px rgba(16,32,26,.12)}
+.adm-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border:1px solid #E4EAE1;border-radius:14px;background:#fff;cursor:pointer;font:inherit}
+.adm-item:hover{background:#F5F6F2}.adm-item.on{border-color:#0F3D2E;box-shadow:0 0 0 1px #0F3D2E}
+.adm-avatar{width:38px;height:38px;border-radius:50%;background:#F2C230;color:#10201A;display:grid;place-items:center;font-weight:700;flex:none}
+.adm-item-text{display:flex;flex-direction:column;min-width:0;flex:1}.adm-item-text b{font-size:15px}.adm-item-text small,.adm-age{color:#55635C;font-size:13px}
+.adm-detail{border:1px solid #E4EAE1;border-radius:20px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.adm-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.adm-head h2{margin:0;font-size:22px}.adm-head p{margin:4px 0 0;color:#55635C;font-size:14px}
+.adm-docs{display:grid;gap:12px}
+.adm-doc{margin:0;border:1px solid #E4EAE1;border-radius:14px;overflow:hidden;background:#F5F6F2}
+.adm-doc figcaption{padding:8px 12px;font-weight:600;font-size:13px;background:#fff;border-bottom:1px solid #E4EAE1}
+.adm-doc img{display:block;width:100%;max-height:340px;object-fit:contain;background:#10201A}
+.adm-doc-load{padding:48px;text-align:center;color:#55635C}
+.adm-note{margin:0;color:#55635C;font-size:13px}
+.adm-checks{border:1px solid #E4EAE1;border-radius:14px;padding:12px 16px;display:grid;gap:10px;margin:0}
+.adm-checks legend{font-weight:700;font-size:14px;padding:0 6px}
+.adm-checks label{display:flex;gap:10px;align-items:center;font-size:15px}
+.adm-actions{display:flex;gap:10px;flex-wrap:wrap}.adm-actions .btn{flex:1;min-width:200px}
+.adm-actions .btn:disabled{opacity:.45;cursor:not-allowed}
+.adm-empty{display:flex;flex-direction:column;gap:6px;padding:24px;border:1px dashed #C9D1C6;border-radius:14px;text-align:center;color:#55635C}
+.adm-empty b{color:#10201A;font-size:16px}.adm-empty span{font-size:14px;font-weight:400}.adm-empty.lg{padding:72px 24px}
+.adm-bars{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;height:150px;align-items:end}
+.adm-bars>div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.adm-bars span{width:100%;max-width:36px;background:#0F3D2E;border-radius:6px 6px 2px 2px;display:block}
+.adm-bars b{font-size:12px}.adm-bars small{font-size:11px;color:#55635C}
+.adm-meter{display:grid;grid-template-columns:110px 1fr 32px;gap:10px;align-items:center;font-size:14px}
+.adm-meter div{height:8px;background:#E4EAE1;border-radius:99px;overflow:hidden}.adm-meter i{display:block;height:100%;background:#0F3D2E}.adm-meter b{text-align:right}
+@media(min-width:900px){
+  .adm-verif{grid-template-columns:340px minmax(0,1fr)}
+  .adm-queue{position:sticky;top:92px;max-height:calc(100vh - 120px);overflow:auto}
+  .adm-docs{grid-template-columns:1fr 1fr}
+  .admin-metrics{grid-template-columns:repeat(4,1fr)}
+  .page.wide .table-scroll table{width:100%}
+}
+
+.adm-activity{border-top:1px solid #E4EAE1;padding-top:12px;display:grid;gap:12px}
+.adm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.adm-kpis div{background:#F5F6F2;border-radius:12px;padding:10px;display:flex;flex-direction:column}.adm-kpis b{font-size:20px}.adm-kpis span{font-size:12px;color:#55635C}
+.adm-act-cols{display:grid;gap:14px}.adm-act-cols h4{margin:0 0 6px;font-size:14px}
+.adm-act-row{display:flex;flex-direction:column;padding:8px 0;border-bottom:1px solid #E4EAE1;font-size:14px}.adm-act-row small{color:#55635C}
+.adm-feed{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #E4EAE1;font-size:14px}.adm-feed small{color:#55635C;white-space:nowrap}
+@media(min-width:900px){.adm-act-cols{grid-template-columns:1fr 1fr}}
+.page.wide .stack>.pill{align-self:flex-start}
